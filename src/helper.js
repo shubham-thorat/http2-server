@@ -77,9 +77,21 @@ const writeToFile = (timeRequired, request_count, serverlogfilePath) => {
   })
 }
 
+const writeToFile2 = (data) => {
+  //console.log("server log file", serverlogfilePath)
+  const file_name = 'rps.log'
+  const path = `./rps/${file_name}`
+  fs.appendFile(path, data, (err) => {
+    if (err) {
+      console.log("Error occurred while appending data to file : ", path, err)
+    }
+  })
+}
+
 module.exports = {
   calculateMean,
   calculatePercentile,
   calculate,
-  writeToFile
+  writeToFile,
+  writeToFile2
 }
