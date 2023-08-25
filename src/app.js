@@ -44,6 +44,7 @@ class Count {
 }
 
 
+
 client.socket.on('error', function (error) {
   // logger.error({
   //   "Nice": error
@@ -54,6 +55,17 @@ client.socket.on('error', function (error) {
   }))
 });
 
+
+let rps = 0;
+const intervalInstance = setInterval(() => {
+  const data = `${Date.now()}  ${rps} \n`
+  // Count.rps_count = 0;
+  console.log("rps:", rps);
+  rps = 0
+  helper.writeToFile2(data)
+}, 1000)
+
+
 let prev_file = ''
 server.on('stream', (stream, headers) => {
   const startTime = Date.now()
@@ -61,6 +73,8 @@ server.on('stream', (stream, headers) => {
   const method = headers[':method'];
   const path = headers[':path'];
   const serverlogfileName = headers['logfilepath'];
+  rps += 1
+  // console.log("RPS", rps)
 
   stream.on('aborted', () => {
     const timeRequired = getTime(startTime);
@@ -144,6 +158,7 @@ server.on('stream', (stream, headers) => {
             prev_file = serverlogfileName
             Count.setInitial()
           }
+
 	 const  t = Date.now() - startTime;
           client.timing("request_send",t);
           stream.end(JSON.stringify({
@@ -181,7 +196,6 @@ server.on('stream', (stream, headers) => {
 
   }
 })
-
 
 
 
