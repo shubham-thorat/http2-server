@@ -1,9 +1,9 @@
 
 var StatsD = require('node-statsd'),
   client = new StatsD({
-    host: '13.235.33.218',
+    host: 'localhost',
     port: 8125,
-    prefix: 'statsd_metric'
+    prefix: 'statsd_metric.'
   });
 
 

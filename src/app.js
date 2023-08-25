@@ -57,7 +57,7 @@ client.socket.on('error', function (error) {
 let prev_file = ''
 server.on('stream', (stream, headers) => {
   const startTime = Date.now()
-
+  client.timing("request_received",0);
   const method = headers[':method'];
   const path = headers[':path'];
   const serverlogfileName = headers['logfilepath'];
@@ -144,7 +144,8 @@ server.on('stream', (stream, headers) => {
             prev_file = serverlogfileName
             Count.setInitial()
           }
-
+	 const  t = Date.now() - startTime;
+          client.timing("request_send",t);
           stream.end(JSON.stringify({
             msg: 'Redis key set success',
             streamId: stream.id,
