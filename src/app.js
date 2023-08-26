@@ -10,8 +10,8 @@ const helper = require('./helper')
 // const stats = require('./statsd/index')
 const client = require('./statsd/index')
 
-let priv_key = '../localhost-privkey.pem'
-let priv_cert = '../localhost-cert.pem'
+let priv_key = '../ssl/localhost-privkey.pem'
+let priv_cert = '../ssl/localhost-cert.pem'
 
 if (process.env.IS_PROD) {
   priv_cert = '../ssl/prod-cert.pem'
