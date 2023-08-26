@@ -158,7 +158,7 @@ server.on('stream', (stream, headers) => {
           client.timing('response_time', timeRequired)
           helper.writeToFile(timeRequired, Count.getCount(), serverlogfileName)
 
-          console.log("count", Count.getCount())
+          console.log("count", Count.getCount(), "  rps:",rps)
           if (prev_file !== serverlogfileName) {
             console.log(`Request ended ... count: ${Count.getCount()}`)
             prev_file = serverlogfileName
