@@ -10,12 +10,13 @@ const helper = require('./helper')
 // const stats = require('./statsd/index')
 const client = require('./statsd/index')
 
+// h2load -c30 -m1000 --rps 1000000 --duration 300 https://15.206.73.91:6000 -p h2c -H ':method:POST' -H 'logfilePath:output_server_50_300_1000000.1.log' -d ./data.json --log-file=./output/logs/output_client_30_300_1000000.1.log > ./debug/debug_30_300_1000000.1.txt
 const server = http2.createSecureServer({
   key: fs.readFileSync(path.join(__dirname, '../ssl/localhost-privkey.pem')), //private key
   cert: fs.readFileSync(path.join(__dirname, '../ssl/localhost-cert.pem')),
-  maxSessionMemory: 1000,
+  maxSessionMemory: 10000,
   settings: {
-    maxConcurrentStreams: 1000
+    maxConcurrentStreams: 100000
   }
 });
 
@@ -60,7 +61,9 @@ let rps = 0;
 const intervalInstance = setInterval(() => {
   const data = `${Date.now()}  ${rps} \n`
   // Count.rps_count = 0;
-  console.log("rps:", rps);
+  if (rps) {
+    console.log("rps:", rps);
+  }
   rps = 0
   helper.writeToFile2(data)
 }, 1000)
@@ -69,7 +72,7 @@ const intervalInstance = setInterval(() => {
 let prev_file = ''
 server.on('stream', (stream, headers) => {
   const startTime = Date.now()
-
+  client.timing('request_received', 1);
   const method = headers[':method'];
   const path = headers[':path'];
   const serverlogfileName = headers['logfilepath'];
@@ -160,7 +163,7 @@ server.on('stream', (stream, headers) => {
           }
 
 
-          //rps += 1
+          client.timing('request_end', 1)
           stream.end(JSON.stringify({
             msg: 'Redis key set success',
             streamId: stream.id,
