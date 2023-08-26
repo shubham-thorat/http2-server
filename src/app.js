@@ -15,7 +15,7 @@ const server = http2.createSecureServer({
   cert: fs.readFileSync(path.join(__dirname, '../ssl/localhost-cert.pem')),
   maxSessionMemory: 1000,
   settings: {
-    maxConcurrentStreams: 1000
+    maxConcurrentStreams: 1000000
   }
 });
 
@@ -60,7 +60,9 @@ let rps = 0;
 const intervalInstance = setInterval(() => {
   const data = `${Date.now()}  ${rps} \n`
   // Count.rps_count = 0;
-  console.log("rps:", rps);
+  if(rps) {
+    console.log("rps:", rps);
+  }
   rps = 0
   helper.writeToFile2(data)
 }, 1000)
