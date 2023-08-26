@@ -10,10 +10,18 @@ const helper = require('./helper')
 // const stats = require('./statsd/index')
 const client = require('./statsd/index')
 
+let priv_key = '../localhost-privkey.pem'
+let priv_cert = '../localhost-cert.pem'
+
+if (process.env.IS_PROD) {
+  priv_cert = '../ssl/prod-cert.pem'
+  priv_key = '../ssl/prod-privkey.pem'
+}
+
 // h2load -c30 -m1000 --rps 1000000 --duration 300 https://15.206.73.91:6000 -p h2c -H ':method:POST' -H 'logfilePath:output_server_50_300_1000000.1.log' -d ./data.json --log-file=./output/logs/output_client_30_300_1000000.1.log > ./debug/debug_30_300_1000000.1.txt
 const server = http2.createSecureServer({
-  key: fs.readFileSync(path.join(__dirname, '../ssl/localhost-privkey.pem')), //private key
-  cert: fs.readFileSync(path.join(__dirname, '../ssl/localhost-cert.pem')),
+  key: fs.readFileSync(path.join(__dirname, priv_key)), //private key
+  cert: fs.readFileSync(path.join(__dirname, priv_cert)),
   maxSessionMemory: 10000,
   settings: {
     maxConcurrentStreams: 1000000
@@ -61,11 +69,7 @@ let rps = 0;
 const intervalInstance = setInterval(() => {
   const data = `${Date.now()}  ${rps} \n`
   // Count.rps_count = 0;
-<<<<<<< HEAD
-  if(rps) {
-=======
   if (rps) {
->>>>>>> d47e9db449a79c557ca915f4f669e59530cabd8b
     console.log("rps:", rps);
   }
   rps = 0
@@ -76,11 +80,7 @@ const intervalInstance = setInterval(() => {
 let prev_file = ''
 server.on('stream', (stream, headers) => {
   const startTime = Date.now()
-<<<<<<< HEAD
-  client.timing("request_received",0);
-=======
   client.timing('request_received', 1);
->>>>>>> d47e9db449a79c557ca915f4f669e59530cabd8b
   const method = headers[':method'];
   const path = headers[':path'];
   const serverlogfileName = headers['logfilepath'];
@@ -170,13 +170,7 @@ server.on('stream', (stream, headers) => {
             Count.setInitial()
           }
 
-<<<<<<< HEAD
-	 const  t = Date.now() - startTime;
-          client.timing("request_send",t);
-=======
-
           client.timing('request_end', 1)
->>>>>>> d47e9db449a79c557ca915f4f669e59530cabd8b
           stream.end(JSON.stringify({
             msg: 'Redis key set success',
             streamId: stream.id,
