@@ -14,18 +14,9 @@ let priv_key = '../ssl2/prod-private.pem'
 let priv_cert = '../ssl2/prod-cert.pem'
 
 
-// const server = http2.createSecureServer({
-//   key: fs.readFileSync(path.join(__dirname, priv_key)), //private key
-//   cert: fs.readFileSync(path.join(__dirname, priv_cert)),
-//   maxSessionMemory: 10000,
-//   settings: {
-//     maxConcurrentStreams: 1000000
-//   }
-// });
-
-const server = http2.createServer({
-  // key: fs.readFileSync(path.join(__dirname, priv_key)), //private key
-  // cert: fs.readFileSync(path.join(__dirname, priv_cert)),
+const server = http2.createSecureServer({
+  key: fs.readFileSync(path.join(__dirname, priv_key)), //private key
+  cert: fs.readFileSync(path.join(__dirname, priv_cert)),
   maxSessionMemory: 10000,
   settings: {
     maxConcurrentStreams: 1000000
@@ -74,9 +65,6 @@ let rps = 0;
 const intervalInstance = setInterval(() => {
   const data = `${Date.now()}  ${rps} \n`
   // Count.rps_count = 0;
-  if (rps) {
-    console.log("rps:", rps);
-  }
   rps = 0
   helper.writeToFile2(data)
 }, 1000)
