@@ -79,7 +79,7 @@ server.on('stream', (stream, headers) => {
   const method = headers[':method'];
   const path = headers[':path'];
   const serverlogfileName = headers['logfilepath'];
-  rps += 1
+  //rps += 1
   // console.log("RPS", rps)
 
   stream.on('aborted', () => {
@@ -164,7 +164,7 @@ server.on('stream', (stream, headers) => {
             prev_file = serverlogfileName
             Count.setInitial()
           }
-
+          rps += 1
           client.timing('request_end', 1)
           stream.end(JSON.stringify({
             msg: 'Redis key set success',
