@@ -10,13 +10,8 @@ const helper = require('./helper')
 // const stats = require('./statsd/index')
 const client = require('./statsd/index')
 
-let priv_key = '../ssl/localhost-privkey.pem'
-let priv_cert = '../ssl/localhost-cert.pem'
-
-if (process.env.IS_PROD) {
-  priv_cert = '../ssl/prod-cert.pem'
-  priv_key = '../ssl/prod-privkey.pem'
-}
+let priv_key = '../ssl2/prod-private.pem'
+let priv_cert = '../ssl2/prod-cert.pem'
 
 // h2load -c30 -m1000 --rps 1000000 --duration 300 https://15.206.73.91:6000 -p h2c -H ':method:POST' -H 'logfilePath:output_server_50_300_1000000.1.log' -d ./data.json --log-file=./output/logs/output_client_30_300_1000000.1.log > ./debug/debug_30_300_1000000.1.txt
 const server = http2.createSecureServer({
