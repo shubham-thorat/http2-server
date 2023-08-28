@@ -81,9 +81,9 @@ server.on('stream', (stream, headers) => {
 
   if (method === 'GET' && path === '/health') {
     stream.respond({ ':status': 200 });
-    return stream.end({
+    return stream.end(JSON.stringify({
       "STATUS": "OK"
-    })
+    }))
   }
   //rps += 1
   // console.log("RPS", rps)
