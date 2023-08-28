@@ -80,7 +80,7 @@ server.on('stream', (stream, headers) => {
 
 
   if (method === 'GET' && path === '/health') {
-    console.log("GET REQUEST RECEIVED /health")
+    //console.log("GET REQUEST RECEIVED /health")
     stream.respond({ ':status': 200 });
     return stream.end(JSON.stringify({
       "STATUS": "OK"
@@ -122,7 +122,7 @@ server.on('stream', (stream, headers) => {
     })
   })
 
-
+  console.log("REQUEST RECEIVED : ", "method : ".method, " Path: ", path)
   if (method === 'GET') {
     // logger.info(`GET method request received at server for streamId : ${stream.id}`)
     console.log(`GET method request received at server for streamId : ${stream.id}`)
