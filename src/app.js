@@ -77,6 +77,14 @@ server.on('stream', (stream, headers) => {
   const method = headers[':method'];
   const path = headers[':path'];
   const serverlogfileName = headers['logfilepath'];
+
+
+  if (method === 'GET' && path === '/health') {
+    stream.respond({ ':status': 200 });
+    return stream.end({
+      "STATUS": "OK"
+    })
+  }
   //rps += 1
   // console.log("RPS", rps)
 
@@ -156,7 +164,7 @@ server.on('stream', (stream, headers) => {
           client.timing('response_time', timeRequired)
           helper.writeToFile(timeRequired, Count.getCount(), serverlogfileName)
 
-          console.log("count", Count.getCount(), "  rps:",rps)
+          console.log("count", Count.getCount(), "  rps:", rps)
           if (prev_file !== serverlogfileName) {
             console.log(`Request ended ... count: ${Count.getCount()}`)
             prev_file = serverlogfileName
