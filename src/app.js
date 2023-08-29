@@ -80,7 +80,7 @@ server.on('stream', (stream, headers) => {
   client.timing('request_received', 1);
   const method = headers[':method'];
   const path = headers[':path'];
-  console.log("REQUEST RECEIVED : ", "method : ".method, " Path: ", path)
+  console.log("REQUEST RECEIVED : ", "method : ", method, " Path: ", path)
   const serverlogfileName = headers['logfilepath'];
 
 
