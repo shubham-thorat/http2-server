@@ -80,6 +80,7 @@ server.on('stream', (stream, headers) => {
   client.timing('request_received', 1);
   const method = headers[':method'];
   const path = headers[':path'];
+  console.log("REQUEST RECEIVED : ", "method : ".method, " Path: ", path)
   const serverlogfileName = headers['logfilepath'];
 
 
@@ -90,6 +91,7 @@ server.on('stream', (stream, headers) => {
       "STATUS": "OK"
     }))
   }
+  console.log("REQUEST OTHER THAN /health")
   //rps += 1
   // console.log("RPS", rps)
 
@@ -126,12 +128,14 @@ server.on('stream', (stream, headers) => {
     })
   })
 
-  console.log("REQUEST RECEIVED : ", "method : ".method, " Path: ", path)
+  console.log("CHECKING FOR METHOD AND PATH")
   if (method === 'GET') {
+    console.log("GET REQUEST RECEIVED")
     // logger.info(`GET method request received at server for streamId : ${stream.id}`)
     console.log(`GET method request received at server for streamId : ${stream.id}`)
     stream.respond({ ':status': 200 });
     const timeRequired = getTime(startTime);
+    console.log("SENDING RESPONSE")
     stream.end(JSON.stringify({
       "Method": method,
       "Path": path,
@@ -139,6 +143,7 @@ server.on('stream', (stream, headers) => {
       "TimeDiffServer": timeRequired,
     }))
   } else {
+    console.log("POST REQUEST RECEIVED")
     // client.set(['foo', 'bar'], 42, function (error, bytes) {
     //   //this only gets called once after all messages have been sent
     //   if (error) {
@@ -155,7 +160,7 @@ server.on('stream', (stream, headers) => {
     })
 
     stream.on('end', () => {
-
+      console.log("POST REQUEST DATA RECEIVED ", data)
       try {
         const payload = data === '' ? '{}' : JSON.parse(data);
 
