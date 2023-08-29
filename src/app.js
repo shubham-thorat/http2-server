@@ -23,6 +23,7 @@ const server = http2.createSecureServer({
   }
 });
 
+const timeStart = Date.now()
 
 const getTime = (startTime) => {
   return (Date.now() - startTime) / 1000;
@@ -207,6 +208,10 @@ server.on('stream', (stream, headers) => {
     })
 
   }
+})
+
+server.on('timeout', () => {
+  console.log(`Timeout Event is triggered, Total Time: ${Date.now() - timeStart}`);
 })
 
 
