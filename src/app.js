@@ -30,8 +30,6 @@ const server = http2.createServer({
   }
 });
 
-server.setTimeout(60000)
-
 const timeStart = Date.now()
 
 const getTime = (startTime) => {
