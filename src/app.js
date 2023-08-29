@@ -216,7 +216,7 @@ server.on('timeout', () => {
 
 
 
-const port = process.env.PORT || 6000
+const port = 6000
 server.listen(port, () => {
   try {
     if (!fs.existsSync('./output')) {
