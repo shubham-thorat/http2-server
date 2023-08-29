@@ -14,15 +14,21 @@ let priv_key = '../ssl2/prod-private.pem'
 let priv_cert = '../ssl2/prod-cert.pem'
 
 
-const server = http2.createSecureServer({
-  key: fs.readFileSync(path.join(__dirname, priv_key)), //private key
-  cert: fs.readFileSync(path.join(__dirname, priv_cert)),
+// const server = http2.createSecureServer({
+//   key: fs.readFileSync(path.join(__dirname, priv_key)), //private key
+//   cert: fs.readFileSync(path.join(__dirname, priv_cert)),
+//   maxSessionMemory: 10000,
+//   settings: {
+//     maxConcurrentStreams: 1000000
+//   }
+// });
+
+const server = http2.createServer({
   maxSessionMemory: 10000,
   settings: {
     maxConcurrentStreams: 1000000
   }
 });
-
 
 server.setTimeout(60000)
 
