@@ -4,4 +4,4 @@ git stash
 
 git pull origin main
 
-pm2 start ./src/index.js --name http2
+pm2 start ./src/app.js --name http2
