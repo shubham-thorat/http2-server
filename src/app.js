@@ -69,13 +69,13 @@ client.socket.on('error', function (error) {
 });
 
 
-let rps = 0;
-const intervalInstance = setInterval(() => {
-  const data = `${Date.now()}  ${rps} \n`
-  // Count.rps_count = 0;
-  rps = 0
-  helper.writeToFile2(data)
-}, 1000)
+// let rps = 0;
+// const intervalInstance = setInterval(() => {
+//   const data = `${Date.now()}  ${rps} \n`
+//   // Count.rps_count = 0;
+//   rps = 0
+//   helper.writeToFile2(data)
+// }, 1000)
 
 
 let prev_file = ''
@@ -95,7 +95,9 @@ server.on('stream', (stream, headers) => {
       "STATUS": "OK"
     }))
   }
-  console.log("REQUEST OTHER THAN /health")
+
+  console.log("REQUEST RECEIVED : ", "method : ", method, " Path: ", path)
+  // console.log("REQUEST OTHER THAN /health")
   //rps += 1
   // console.log("RPS", rps)
 
@@ -132,9 +134,7 @@ server.on('stream', (stream, headers) => {
     })
   })
 
-  console.log("CHECKING FOR METHOD AND PATH")
   if (method === 'GET') {
-    console.log("GET REQUEST RECEIVED")
     // logger.info(`GET method request received at server for streamId : ${stream.id}`)
     console.log(`GET method request received at server for streamId : ${stream.id}`)
     stream.respond({ ':status': 200 });
@@ -178,13 +178,13 @@ server.on('stream', (stream, headers) => {
           client.timing('response_time', timeRequired)
           helper.writeToFile(timeRequired, Count.getCount(), serverlogfileName)
 
-          console.log("count", Count.getCount(), "  rps:", rps)
+          console.log("count", Count.getCount())
           if (prev_file !== serverlogfileName) {
             console.log(`Request ended ... count: ${Count.getCount()}`)
             prev_file = serverlogfileName
             Count.setInitial()
           }
-          rps += 1
+          // rps += 1
           client.timing('request_end', 1)
           stream.end(JSON.stringify({
             msg: 'Redis key set success',
