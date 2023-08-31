@@ -10,25 +10,25 @@ const helper = require('./helper')
 // const stats = require('./statsd/index')
 const client = require('./statsd/index')
 
-let priv_key = '../ssl2/prod-private.pem'
-let priv_cert = '../ssl2/prod-cert.pem'
+let priv_key = '../private_key.pem'
+let priv_cert = '../certificate.pem'
 
 
-// const server = http2.createSecureServer({
-//   key: fs.readFileSync(path.join(__dirname, priv_key)), //private key
-//   cert: fs.readFileSync(path.join(__dirname, priv_cert)),
-//   maxSessionMemory: 10000,
-//   settings: {
-//     maxConcurrentStreams: 1000000
-//   }
-// });
-
-const server = http2.createServer({
+const server = http2.createSecureServer({
+  key: fs.readFileSync(path.join(__dirname, priv_key)), //private key
+  cert: fs.readFileSync(path.join(__dirname, priv_cert)),
   maxSessionMemory: 10000,
   settings: {
     maxConcurrentStreams: 1000000
   }
 });
+
+// const server = http2.createServer({
+//   maxSessionMemory: 10000,
+//   settings: {
+//     maxConcurrentStreams: 1000000
+//   }
+// });
 
 const timeStart = Date.now()
 
@@ -225,8 +225,6 @@ server.on('stream', (stream, headers) => {
 server.on('timeout', () => {
   console.log(`Timeout Event is triggered, Total Time: ${Date.now() - timeStart}`);
 })
-
-
 
 const port = 6000
 server.listen(port, () => {
