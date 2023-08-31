@@ -96,7 +96,7 @@ server.on('stream', (stream, headers) => {
     }))
   }
 
-  console.log("REQUEST RECEIVED : ", "method : ", method, " Path: ", path)
+  // console.log("REQUEST RECEIVED : ", "method : ", method, " Path: ", path)
   // console.log("REQUEST OTHER THAN /health")
   //rps += 1
   // console.log("RPS", rps)
@@ -147,7 +147,7 @@ server.on('stream', (stream, headers) => {
       "TimeDiffServer": timeRequired,
     }))
   } else {
-    console.log("POST REQUEST RECEIVED")
+    // console.log("POST REQUEST RECEIVED")
     // client.set(['foo', 'bar'], 42, function (error, bytes) {
     //   //this only gets called once after all messages have been sent
     //   if (error) {
@@ -164,7 +164,7 @@ server.on('stream', (stream, headers) => {
     })
 
     stream.on('end', () => {
-      console.log("POST REQUEST DATA RECEIVED ", data)
+      // console.log("POST REQUEST DATA RECEIVED ", data)
       try {
         const payload = data === '' ? '{}' : JSON.parse(data);
 
@@ -178,7 +178,7 @@ server.on('stream', (stream, headers) => {
           client.timing('response_time', timeRequired)
           helper.writeToFile(timeRequired, Count.getCount(), serverlogfileName)
 
-          console.log("count", Count.getCount())
+          console.log("REQUEST COUNT : ", Count.getCount())
           if (prev_file !== serverlogfileName) {
             console.log(`Request ended ... count: ${Count.getCount()}`)
             prev_file = serverlogfileName
