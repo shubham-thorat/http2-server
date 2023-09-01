@@ -166,7 +166,7 @@ server.on('stream', (stream, headers) => {
     stream.on('end', () => {
       // console.log("POST REQUEST DATA RECEIVED ", data)
       try {
-        console.log(typeof data)
+        console.log(typeof data, " DATA: ", data)
         let payload = data === '' || data === undefined ? {
           'KEY': 'DEFAULT_KEY',
           'VALUE': 'DEFAULT_VALUE'
