@@ -166,7 +166,11 @@ server.on('stream', (stream, headers) => {
     stream.on('end', () => {
       // console.log("POST REQUEST DATA RECEIVED ", data)
       try {
-        const payload = data === '' ? '{}' : JSON.parse(data);
+        console.log(typeof data)
+        let payload = data === '' || data === undefined ? {
+          'KEY': 'DEFAULT_KEY',
+          'VALUE': 'DEFAULT_VALUE'
+        } : JSON.parse(data);
 
         RedisClient.setKey(payload.key, payload.value).then(response => {
           const endTime = Date.now();
