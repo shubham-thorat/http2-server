@@ -85,11 +85,11 @@ server.on('stream', (stream, headers) => {
   const method = headers[':method'];
   const path = headers[':path'];
   // console.log("REQUEST RECEIVED : ", "method : ", method, " Path: ", path)
-  const serverlogfileName = headers['logfilepath'];
+  const serverlogfileName = headers['serverlogfilename'] ?? 'output_server.log';
 
 
   if (method === 'GET' && path === '/health') {
-    // console.log("GET REQUEST RECEIVED /health")
+    console.log("GET REQUEST RECEIVED /health")
     stream.respond({ ':status': 200 });
     return stream.end(JSON.stringify({
       "STATUS": "OK"
