@@ -19,7 +19,7 @@ const server = http2.createSecureServer({
   cert: fs.readFileSync(path.join(__dirname, priv_cert)),
   maxSessionMemory: 10000,
   settings: {
-    maxConcurrentStreams: 1000000
+    maxConcurrentStreams: 1000
   },
 });
 
