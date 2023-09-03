@@ -23,7 +23,7 @@ const server = http2.createSecureServer({
   },
 });
 
-server.setTimeout(65000)
+server.setTimeout(1000 * 60 * 60)
 // const server = http2.createServer({
 //   maxSessionMemory: 10000,
 //   settings: {
