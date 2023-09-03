@@ -20,9 +20,10 @@ const server = http2.createSecureServer({
   maxSessionMemory: 10000,
   settings: {
     maxConcurrentStreams: 1000000
-  }
+  },
 });
 
+server.setTimeout(65000)
 // const server = http2.createServer({
 //   maxSessionMemory: 10000,
 //   settings: {
@@ -226,7 +227,6 @@ server.on('stream', (stream, headers) => {
   }
 })
 
-server.setTimeout(1000 * 60 * 60)
 server.on('timeout', () => {
   console.log(`Timeout Event is triggered, Total Time: ${Date.now() - timeStart}`);
 })
