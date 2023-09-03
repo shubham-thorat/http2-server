@@ -90,7 +90,7 @@ server.on('stream', (stream, headers) => {
 
 
   if (method === 'GET' && path === '/health') {
-    // console.log("GET REQUEST RECEIVED /health")
+    //console.log("GET REQUEST RECEIVED /health")
     stream.respond({ ':status': 200 });
     return stream.end(JSON.stringify({
       "STATUS": "OK"
