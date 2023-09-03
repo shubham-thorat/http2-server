@@ -184,11 +184,6 @@ server.on('stream', (stream, headers) => {
           helper.writeToFile(timeRequired, Count.getCount(), serverlogfileName)
 
           console.log("REQUEST COUNT : ", Count.getCount())
-          if (prev_file !== serverlogfileName) {
-            console.log(`Request ended ... count: ${Count.getCount()}`)
-            prev_file = serverlogfileName
-            Count.setInitial()
-          }
           // rps += 1
           client.timing('request_end', 1)
           stream.end(JSON.stringify({
